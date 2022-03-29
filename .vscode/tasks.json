@@ -1,0 +1,286 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    //
+    //! DON'T FORGET TO ADD THESE LINES INTO YOUR USER SHELL PROFILE
+    //  export PATH=$PATH:<PATH_TO_FPC_BIN_FOLDER>
+    //  export INSTANTFPCOPTIONS="-n @<PATH_TO_FPC_BIN_FOLDER>fpc.cfg"
+    //
+    "version": "2.0.0",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "env": {
+        // task settings for files and folders, use full path for commands
+        "FPC_COMMAND" : "/usr/local/bin/fpc",
+        // "FPC_COMMAND" : "/Users/MacBee/Programs/freepascal/fpc/bin/x86_64-darwin/fpc.sh",
+        "JCF_COMMAND" : "./jcf",
+        "PROJECTFILE" : "${relativeFile}",
+        "PROJECTBASE" : "${fileBasenameNoExtension}",
+        "UNITS"       : "~/Programs/GitHub/*",
+        "INCLUDES"    : "~/Programs/pascal/inc/*",
+        "LIBRARIES"   : "/usr/local/lib/fpc*",
+        "OUTPUT"      : ".build",
+        "DEBUG"       : ".build/debug",
+        "RELEASE"     : ".build/release",
+        "DEPLOY"      : ".build/deploy",
+        "EXTENSION"   : ".cgi",     // set this to .cgi for web app
+        "PROCESSOR"   : "-Px86_64",
+        "OPSYSTEM"    : "-Tlinux",
+        "SYNTAX"      : "-Mobjfpc",
+      },
+    },
+    "tasks": [
+      {
+        "label": "fpc: Build Debug",
+        "type": "shell",
+        "group": "build",
+        "command": "${FPC_COMMAND}",
+        "args": [
+          "${PROJECTFILE}",
+          "${PROCESSOR}",
+          "${OPSYSTEM}",
+          "${SYNTAX}",
+          "-Scahij-",
+          "-CroOti",
+          "-O-",
+          "-Xg",
+          "-B",
+          "-v",
+          "-glpsw2",
+          "-godwarfcpp",
+          "-Fu${UNITS}",
+          "-Fi${INCLUDES}",
+          "-Fl${LIBRARIES}",
+          "-FE${DEBUG}",
+          "-FU${OUTPUT}"
+        ],
+        "presentation": {
+          "focus": true
+        },
+        "problemMatcher": {
+          "owner": "objectpascal",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}"
+          ],
+          "pattern": {
+            "kind": "location",
+            "regexp": "^(.*)\\((\\d.*),(\\d.*)\\) (Warning|Error|Fatal): (.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "loop": true
+          }
+        }
+      },
+      {
+        "label": "fpc: Build Release",
+        "type": "shell",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "command": "${FPC_COMMAND}",
+        "args": [
+          "${PROJECTFILE}",
+          "${PROCESSOR}",
+          "${OPSYSTEM}",
+          "${SYNTAX}",
+          "-Schij-",
+          "-CX",
+          "-O3",
+          "-XXs",
+          "-B",
+          "-v",
+          "-Fu${UNITS}",
+          "-Fi${INCLUDES}",
+          "-Fl${LIBRARIES}",
+          "-FE${RELEASE}",
+          "-FU${OUTPUT}"
+        ],
+        "presentation": {
+          "focus": true
+        },
+        "problemMatcher": {
+          "owner": "objectpascal",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}"
+          ],
+          "pattern": {
+            "kind": "location",
+            "regexp": "^(.*)\\((\\d.*),(\\d.*)\\) (Warning|Error|Fatal): (.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "loop": true
+          }
+        }
+      },
+      {
+        "label": "fpc: Syntax Check",
+        "type": "shell",
+        "group": "build",
+        "command": "${FPC_COMMAND}",
+        "args": [
+          "${PROJECTFILE}",
+          "${PROCESSOR}",
+          "${OPSYSTEM}",
+          "${SYNTAX}",
+          "-Scahij-",
+          "-Se99",
+          "-B",
+          "-v",
+          "-s",
+          "-Fu${UNITS}",
+          "-Fi${INCLUDES}",
+          "-Fl${LIBRARIES}",
+          "-FE${OUTPUT}",
+          "-FU${OUTPUT}"
+        ],
+        "presentation": {
+          "focus": true
+        },
+        "problemMatcher": {
+          "owner": "objectpascal",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}"
+          ],
+          "pattern": {
+            "kind": "location",
+            "regexp": "^(.*)\\((\\d.*),(\\d.*)\\) (Warning|Error|Fatal): (.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "loop": true
+          }
+        }
+      },
+      {
+        "label": "fpc: Run Code",
+        "type": "shell",
+        "group": "test",
+        "command": "instantfpc",
+        "args": [
+          "${PROJECTFILE}",
+          "-B"
+        ],
+        "presentation": {
+          "focus": true
+        },
+        "problemMatcher": {
+          "owner": "objectpascal",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}"
+          ],
+          "pattern": {
+            "kind": "location",
+            "regexp": "^(.*)\\((\\d.*),(\\d.*)\\) (Warning|Error|Fatal): (.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "loop": true
+          }
+        }
+      },
+      {
+        "label": "fpc: Execute Binary",
+        "type": "shell",
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "command": "./${DEBUG}/${PROJECTBASE}",
+        "args": [],
+        "presentation": {
+          "focus": true
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "fpc: Deploy Release",
+        "type": "shell",
+        "command": "cp",
+        "args": [
+          "${RELEASE}/${PROJECTBASE}",
+          "${DEPLOY}/${PROJECTBASE}${EXTENSION}"
+        ],
+        "presentation": {
+          "reveal": "silent"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "JCF: Beautify Code",
+        "type": "shell",
+        "command": "${JCF_COMMAND}",
+        "args": [
+          "${PROJECTFILE}",
+          "-clarify",
+          "-inplace",
+          "-config=jcf.xml"
+        ],
+        "presentation": {
+          "reveal": "never"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "JCF: Obfuscate Code",
+        "type": "shell",
+        "command": "${JCF_COMMAND}",
+        "args": [
+          "${PROJECTFILE}",
+          "-obfuscate",
+          "-inplace",
+          "-config=jcf.xml"
+        ],
+        "presentation": {
+          "reveal": "never"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "fpc: Create Build Folders",
+        "type": "shell",
+        "command": "mkdir",
+        "args": [
+          "${OUTPUT}",
+          "${DEBUG}",
+          "${RELEASE}",
+          "${DEPLOY}"
+        ],
+        "presentation": {
+          "reveal": "silent"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "fpc: Remove Build Files",
+        "type": "shell",
+        "command": "rm",
+        "args": [
+          "-rf",
+          "${OUTPUT}/*.*",
+          "${DEBUG}/{,.[!.],..?}*",
+          "${RELEASE}/{,.[!.],..?}*",
+          "~/.cache/instantfpc/${PROJECTBASE}",
+          "~/.cache/instantfpc/${PROJECTBASE}.*"
+        ],
+        "presentation": {
+          "reveal": "silent"
+        },
+        "problemMatcher": []
+      }
+    ]
+  } 

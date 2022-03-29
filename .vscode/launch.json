@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      // { // shortcut: F5 (start debugging)
+      //   "type": "gfb",
+      //   "request": "launch",
+      //   "name": "LLDB Debugger",
+      //   "cwd": "${workspaceFolder}",
+      //   "executable": ".build/debug/${fileBasenameNoExtension}",
+      //   "args": [],
+      //   "preLaunchTask": "fpc: Build Debug",
+      //   "postDebugTask": "fpc: Remove Build Files"
+      // },
+      { // native debugger
+        "type": "lldb-mi",
+        "request": "launch",
+        "name": "Native Debugger",
+        "cwd": "${workspaceFolder}",
+        "target": ".build/debug/${fileBasenameNoExtension}",
+        // "terminal": "",
+        "preLaunchTask": "fpc: Build Debug",
+        "postDebugTask": "fpc: Remove Build Files"
+      },
+    ]
+  }
