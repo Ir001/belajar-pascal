@@ -1,27 +1,29 @@
-program Soal1;
+program Soal2;
 uses crt;
 var 
     xo : array[0..4, 0..4] of Char;
-    i, j: integer;
+    kolom, baris: integer;
 begin
     clrscr;
     // Looping initialize value to array
-    for i:=0 to 4 do
+    for kolom:=0 to 4 do
         begin
-            for j:=0 to 4 do
+            for baris:=0 to 4  do
                 begin
-                if(i mod 2 = 0 ) then
-                  xo[i,j]:='X'
+                if(kolom = baris) then
+                  xo[kolom,baris]:='X'
+                else if(kolom < baris) then
+                  xo[kolom,baris]:='O'
                 else
-                  xo[i,j]:='O';
+                  xo[kolom,baris]:=' ';
                 end;
         end;
     // Looping output
-     for i:=0 to 4 do
+     for kolom:=0 to 4 do
         begin
-            for j:=0 to 4 do
+            for baris:=0 to 4 do
                 begin
-                    Write(xo[i,j],'  ');
+                    Write(xo[kolom,baris],'  ');
                 end;
             WriteLn()
         end;

@@ -10,6 +10,7 @@ begin
         begin
             for j:=0 to 4 do
                 begin
+                // Jika variable i dibagi 2 sisa 0 maka nilai samadengan X
                 if(i mod 2 = 0 ) then
                   xo[i,j]:='X'
                 else
