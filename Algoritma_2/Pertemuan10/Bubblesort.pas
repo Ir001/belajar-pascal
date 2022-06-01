@@ -1,44 +1,19 @@
 Program Bubblesort;
 
 uses crt;
-label menu; 
  
 const NPMLength = 12; 
 
 var  
     nameStr, NPMStr   : String;
     nameLength        : integer;
-
-// procedure beforeSortName(var nama : string);
-// var valueName : Integer;
-// begin
-//     lengthOfName := length(nama); 
-
-//     for valueName:=1 to lengthOfName do
-//         begin 
-//             write(nama[valueName]:2); 
-//         end; 
-//     writeln;
-// end;
-
-// procedure beforeSortNpm(var npm : string);
-// var valueNpm : Integer;
-// begin 
-//     for valueNpm:=1 to NPMLength do
-//         begin  
-//              write(npm[valueNpm]: 2); 
-//         end;
-
-//     writeln;
-// end; 
-
 procedure swap(var a, b: Char);
-var c:Char;
-begin
-    c:=a;
-    a:=b;
-    b:=c; 
-end;
+    var c:Char;
+    begin
+        c:=a;
+        a:=b;
+        b:=c; 
+    end;
 
 procedure bubbleSortNameAsc(var nameStr:String);
     var i, j : Integer;
