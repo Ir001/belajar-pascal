@@ -1,30 +1,30 @@
 Program Dataselection;
 uses crt;
-const NPMLength = 12;
+const panjangNPM = 12;
 var 
-    i, j, min, lengthOfName : Integer;
+    i, j, min : Integer;
     temp : Char;
-    NPMStr : String;
+    NPM : String;
 
-procedure selectionSortAsc(var NPMStr : String);
+procedure selectionSortAsc(var NPM : String);
 begin
-    for i:= 1 to NPMLength-1 do
+    for i:= 1 to panjangNPM-1 do
         begin
             min := i;
-            for j:= i to NPMLength do
+            for j:= i to panjangNPM do
                 begin
-                    if NPMStr[j] < NPMStr[min] then
+                    if NPM[j] < NPM[min] then
                     min:=j;
                 end;
-            temp:=NPMStr[i];
-            NPMStr[i]:=NPMStr[min];
-            NPMStr[min] := temp;
+            temp:=NPM[i];
+            NPM[i]:=NPM[min];
+            NPM[min] := temp;
         end;
 end;
 
 begin
-    Write('Input your NPM :'); ReadLn(NPMStr);
-    WriteLn('NPM Before Sorted :', NPMStr);
-    selectionSortAsc(NPMStr);
-    WriteLn('NPM After Sorted (ASC) :', NPMStr);
+    Write('Input your NPM :'); ReadLn(NPM);
+    WriteLn('NPM Before Sorted :', NPM);
+    selectionSortAsc(NPM);
+    WriteLn('NPM After Sorted (ASC) :', NPM);
 end.

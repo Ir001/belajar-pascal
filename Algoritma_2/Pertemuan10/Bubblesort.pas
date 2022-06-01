@@ -2,12 +2,12 @@ Program Bubblesort;
 
 uses crt;
  
-const NPMLength = 12; 
+const panjangNPM = 12; 
 
 var  
-    nameStr, NPMStr   : String;
+    namaMahasiswa, NPM   : String;
     nameLength        : integer;
-procedure swap(var a, b: Char);
+procedure tukar(var a, b: Char);
     var c:Char;
     begin
         c:=a;
@@ -15,42 +15,44 @@ procedure swap(var a, b: Char);
         b:=c; 
     end;
 
-procedure bubbleSortNameAsc(var nameStr:String);
+procedure bubbleSortName(var namaMahasiswa:String);
     var i, j : Integer;
     begin
-        nameLength := length(nameStr); 
+        nameLength := length(namaMahasiswa); 
         for i := 1 to nameLength - 1 do
             begin  
                 for j:=nameLength downto i+1 do
                 begin
-                    if(nameStr[j] < nameStr[j-1]) then  
-                    swap(nameStr[j], nameStr[j-1]); 
+                    if(namaMahasiswa[j] < namaMahasiswa[j-1]) then  
+                    tukar(namaMahasiswa[j], namaMahasiswa[j-1]); 
                 end 
             end
     end;
 
-procedure bubbleSortNpmAsc(var a:string);
+procedure bubbleSortNpm(var a:string);
     var i, j : Integer;
     begin
-       for i := 1 to NPMLength - 1 do
+       for i := 1 to panjangNPM - 1 do
         begin  
-            for j:=NPMLength downto i+1 do
+            for j:=panjangNPM downto i+1 do
             begin
-                if(NPMStr[j] < NPMStr[j-1]) then  
-                swap(NPMStr[j], NPMStr[j-1]); 
+                if(NPM[j] < NPM[j-1]) then  
+                tukar(NPM[j], NPM[j-1]); 
             end 
         end
     end;
 
 begin  
-    Write('Input your Name : '); ReadLn(nameStr);
-    Write('Input your NPM : '); ReadLn(NPMStr);
-    WriteLn('Name Before Sorted :', nameStr);
-    WriteLn('NPM Before Sorted :', NPMStr);
+    Write('Masukan Nama Anda : '); ReadLn(namaMahasiswa);
+    Write('Masukan NPM  Anda: '); ReadLn(NPM);
+    WriteLn;
+    WriteLn('Nama Sebelum Sorted :', namaMahasiswa);
+    WriteLn('NPM Sebelum Sorted :', NPM);
+    WriteLn;
+    bubbleSortName(namaMahasiswa);
+    bubbleSortNpm(NPM);
+    WriteLn;
 
-    bubbleSortNameAsc(nameStr);
-    bubbleSortNpmAsc(NPMStr);
-
-    WriteLn('Name After Sorted :', nameStr);
-    WriteLn('NPM After Sorted :', NPMStr);
+    WriteLn('Nama Setelah Sorted :', namaMahasiswa);
+    WriteLn('NPM Setelah Sorted :', NPM);
 end.
