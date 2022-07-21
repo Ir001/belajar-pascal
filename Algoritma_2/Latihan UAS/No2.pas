@@ -1,4 +1,5 @@
 Program No2;
+
 uses crt;
 type
     larik = array[1..6] of integer; { Inisialisasi array}
@@ -30,18 +31,9 @@ procedure bubbleSortDesc(var data:larik);
 
 begin  
     clrscr; { Clear Screen}
-    {Menampilkan data sebelum di-sorting}
-    WriteLn('Sebelum di-sorting : ');
-    for x:=1 to 6 do
-      Write(data[x],', ');
     bubbleSortDesc(data); {Memanggil Function bubblesort desc}
-    WriteLn;
-    WriteLn('Hasil Bubble Sort Descending : ');
-    WriteLn;
+    Write('Hasil Descending : ');
     {Menampilkan hasil sorting descending}
     for x:=1 to 6 do
       Write(data[x],', ');
-    Writeln;
-    Writeln;
-    
 end.

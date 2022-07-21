@@ -1,53 +1,52 @@
 program No3;
 uses crt;
-type
-    larik = array[1..11] of integer;
-        
-var
-        data : larik = (15, 18, 23,30,33,41,45,48,53,60,72);
-        q               : integer; // Query to find
-        n,x,y,idx    : integer;
-function binary(q: integer):integer;
-    var
-            activeIndex,lastIndex,divIndex: integer;
-            hasQ:boolean;
-            indexFound: integer;
-    begin
-            activeIndex := 1; // Active Index on loop
-            lastIndex := n; // Last index of array
-            hasQ :=false; // Variable flag if query was found or not
-            indexFound := 0; // Index was search by query
-            while ((activeIndex <= lastIndex) and (not hasQ)) do 
-            begin
-                divIndex:= (activeIndex+lastIndex) div 2;
-                if q = data[divIndex] then
-                    begin
-                            hasQ := true;
-                            indexFound := divIndex;
-                    end
-                else
-                    begin
-                            if q < data[divIndex] then
-                            lastIndex :=  divIndex-1
-                            else
-                            activeIndex := divIndex+1;
-                    end;
-            end;
-            binary:=indexFound;
-    end;
-begin   
+var 
+    larik:array[1..50] of integer;
+    n,i,j,min,temp,x,k:integer;
+    m:real;
+
+begin
     clrscr;
-    n := 11;
-    for x:= 1 to n do
-        writeln('Index[',x,'] : ',data[x],' ');
-        writeln;
-        write('Cari     : '); readln(q);
-        idx:=binary(q); // Find index of query value
-        if idx <> 0 then
-            begin
-                    writeln('Data yang dicari : ',q);
-                    writeln('Ditemukan pada idx ke-',idx);
-            end
-            else
-                    write(q,' Tidak ditemukan');
+    for i:=1 to Length(larik) do
+    begin
+        write('Masukan data ke-', i,' = '); readln(larik[i]);
+    end;
+    writeln;
+    write('Data hasil input : ');
+    for i := 1 to Length(larik) do
+    write(larik[i],' ');
+    writeln;
+    writeln;
+
+    for i := 1 to Length(larik) - 1 do
+    begin
+        min := i;
+        for j := i to Length(larik) do
+        begin
+            if(larik[j] < larik[min]) then
+            min := j;
+        end;
+        temp := larik[i];
+        larik[i] := larik[min];
+        larik[min] := temp;
+    end;
+    write('Data setelah di urutkan : ');
+    for i := 1 to Length(larik) do
+    write(larik[i],' , ');
+    writeln;
+    writeln;
+
+    x := 0; k := Length(larik); m := 0;
+    for i := 1 to Length(larik) do
+        begin
+            m := m + larik[i];
+            if(larik[i] < k) then
+                k := larik[i]
+            else if(larik[i] > x) then
+                x := larik[i]
+        end;
+    m := m / Length(larik);
+    writeln('Nilai Terbesar : ', x);
+    writeln('Nilai Terkecil : ', k);
+    writeln('Nilai Rata-rata : ', m:0:2);
 end.
